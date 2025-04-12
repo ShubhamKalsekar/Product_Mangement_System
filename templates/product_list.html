@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>Product List</h1>
+
+<!-- This will be populated with products dynamically via AJAX -->
+<div class="search-bar mb-3">
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for products..." class="form-control">
+</div>
+<div id="product-list"></div>
+
+<script>
+  // When the page loads, get the products from the server via AJAX
+  window.onload = function() {
+    fetch('/api/products')
+      .then(response => response.json())
+      .then(data => {
+        const productListDiv = document.getElementById('product-list');
+        productListDiv.innerHTML = ''; 
+        
+        data.forEach(product => {
+          const productDiv = document.createElement('div');
+          productDiv.innerHTML = `<h3>${product.name}</h3><p>Price: ${product.price}</p>`;
+          productListDiv.appendChild(productDiv); 
+        });
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  }
+</script>
+<script>
+  // Function to filter the table rows based on search input
+  function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("product-list");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search
+      for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td");
+          let rowContainsFilter = false;
+          
+          // Check each column in the row for the filter match
+          for (let j = 0; j < td.length; j++) {
+              if (td[j]) {
+                  txtValue = td[j].textContent || td[j].innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                      rowContainsFilter = true;
+                      break; 
+                  }
+              }
+          }
+
+          if (rowContainsFilter) {
+              tr[i].style.display = "";
+          } else {
+              tr[i].style.display = "none";
+          }
+      }
+  }
+</script>
+
+
+{% endblock %}

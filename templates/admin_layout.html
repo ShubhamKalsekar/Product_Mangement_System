@@ -1,0 +1,58 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Auth</title>
+</head>
+<body>
+    
+    <nav>
+        <a href="/">Home</a>|
+        {% if 'usr_id' in session %}
+        <a href="/Admin_Dashboard">Admin Dashboard</a>
+        {% else %}
+        <a href="/Admin_login">Login</a>
+        {% endif %}
+    </nav>
+
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category}}"> {{ message }}</div>
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+    </div>
+    <main>
+        {% block content %}
+        Default content can go here (optional) 
+        {% endblock %}
+    </main>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        <!-- The content of each page will be injected here -->
+        {% endblock %}
+    </div>
+</body>
+</html>

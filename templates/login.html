@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+    
+    body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: url('https://preview.colorlib.com/theme/bootstrap/login-form-20/images/bg.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+       
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            animation: fadeIn 0.5s ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+       
+        .form-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 420px;
+        animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+        from {
+        opacity: 0;
+        transform: translateY(-20px);
+        }
+        to {
+        opacity: 1;
+        transform: translateY(0);
+        }
+        }
+        
+        h1 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        text-align: center;
+        }
+        
+        label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+        }
+        label span {
+        color: red; 
+        margin-left: 5px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 18px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+        }
+        
+        /* Valid and Invalid Inputs */
+        input:invalid {
+        border-color: #e74c3c;
+        }
+        
+        input:valid {
+        border-color: #2ecc71;
+        }
+        
+        /* Submit Button */
+        input[type="submit"] {
+        width: 100%;
+        padding: 14px;
+        background-color: #3498db;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        input[type="submit"]:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        }
+        
+        /* Links Section */
+        .links {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        text-align: center;
+        }
+        
+        .links a {
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.3s;
+        }
+        
+        .links a:hover {
+        text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 480px) {
+        .form-container {
+        padding: 30px;
+        }
+        
+        h1 {
+        font-size: 1.6rem;
+        }
+        
+        input[type="submit"] {
+        font-size: 1rem;
+        }
+        }
+        
+        .links a.google-login {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ff0000;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        }
+        
+        .links a.google-login:hover {
+        background-color: #68de3a;
+        }
+        
+        /* Google logo inside the button */
+        .links a.google-login img {
+        margin-right: 8px;
+        height: 20px;
+        width: 20px;
+        }
+        
+        .alert {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        }
+        .alert-error {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+        }
+        .alert-success {
+        color: #0f5132;
+        background-color: #d1e7dd;
+        border-color: #badbcc;
+        }
+        .popup-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            z-index: 1000;
+            text-align: center;
+        }
+        </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Login</h1>
+
+        
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+           
+            <div>
+                <label for="email">Email <span>*</span></label>
+                {{ form.email(class="form-control", id="email") }}
+            </div>
+           
+            <div>
+                <label for="password">Password <span>*</span></label>
+                {{ form.password(class="form-control", id="password") }}
+            </div>
+            <div>
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        
+
+        <div class="links">
+            <a href="{{ url_for('register') }}">New around here? Sign up</a><br>
+            <!-- <div class="links text-center mt-3">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot Password?</a>
+            </div> -->
+
+            <a href="{{url_for('googleLogin')}}" class="google-login">
+                Login with Google
+            </a>
+        </div>
+
+
+
+        <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="forgotPasswordForm" method="POST" action="/user_forgot_password">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="forgot_email" class="form-label">Enter Your email</label>
+                                <input type="email" class="form-control" id="forgot_email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="resetPasswordForm" method="POST" action="{{ url_for('user_reset_password', token=token) }}">
+                        <div class="modal-body">
+                            <input type="hidden" id="reset_token" name="reset_token" value="{{ token }}">
+                            <div class="mb-3">
+                                <label for="new_password" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div id="flash-message" class="popup-message">
+            {% for category, message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<script>
+    window.onload = function () {
+        let flashMessage = document.getElementById("flash-message");
+        if (flashMessage) {
+            flashMessage.style.display = "block";
+            setTimeout(() => {
+                flashMessage.style.display = "none";
+            }, 3000); // Hide message after 3 seconds
+        }
+    };
+</script>
+    <script>
+        // Clear previous errors
+        // Prevent form submission if validation fails
+        // Password Validation (Min 6 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char)
+            
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginForm = document.querySelector("form");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+        
+            loginForm.addEventListener("submit", function(event) {
+                let isValid = true;
+                let emailValue = emailInput.value.trim();
+                let passwordValue = passwordInput.value.trim();
+        
+                document.querySelectorAll(".error-message").forEach(el => el.remove());
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailValue)) {
+                    showError(emailInput, "Please enter a valid email.");
+                    isValid = false;
+                }
+                const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+                if (!passwordPattern.test(passwordValue)) {
+                    showError(passwordInput, "Password must have at least 6 characters, one uppercase, one lowercase, one number, and one special character.");
+                    isValid = false;
+                }
+                if (!isValid) {
+                    event.preventDefault(); 
+                }
+            });
+        
+            function showError(inputElement, message) {
+                const error = document.createElement("div");
+                error.classList.add("error-message");
+                error.style.color = "red";
+                error.style.fontSize = "0.9rem";
+                error.style.marginTop = "5px";
+                error.textContent = message;
+                inputElement.parentNode.appendChild(error);
+            }
+        });
+        </script>
+        
+
+<script>
+/*
+Handle Forgot Password Form Submission
+Simulate server-side email verification
+Example logic: Replace with actual backend verification
+Close Forgot Password modal and open Reset Password modal
+Simulate setting a reset token (replace with actual server-side logic)
+*/
+
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        // const resetPasswordModal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
+        const forgotPasswordModal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
+
+        forgotPasswordForm.addEventListener('submit',
+             function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            if (email === session['email']) {
+                alert('Email verified. Proceed to reset your password.');
+                forgotPasswordModal.hide();
+
+                document.getElementById('reset_token').value = "example_generated_token";
+            } else {
+                alert('Invalid email. Please try again.');
+            }
+        });
+
+    </script>
+
+    
+</body>
+</html>

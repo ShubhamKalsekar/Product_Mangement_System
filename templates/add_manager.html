@@ -1,0 +1,48 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+<h3>Add Retailer/Manager</h3>
+<form method="POST" action="{{ url_for('add_manager') }}" onsubmit="return validateForm()">
+    {{ form.hidden_tag() }}
+    
+    <div>
+        <label for="email" pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$" required>Email:</label>
+        {{ form.email(class="form-control") }}
+    </div>
+
+    <div>
+        <label for="password" minlength="6" required>Password:</label>
+        {{ form.password(class="form-control") }}
+    </div>
+
+    <div>
+        <label for="role" required>Role:</label>
+        {{ form.role(class="form-control") }}
+    </div>
+    
+    <div>
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+<p><a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary mb-3">Back to Dashboard</a></p>
+
+<script>
+    function validateForm() {
+        const email = document.getElementById('email').value;
+        const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        if (!email.match(emailPattern)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+        const password = document.getElementById('password').value;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+        if (!password.match(passwordPattern)) {
+            alert("Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+            return false;
+        }
+        return true; 
+    }
+</script>
+
+{% endblock %}

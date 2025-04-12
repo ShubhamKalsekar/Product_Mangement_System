@@ -1,0 +1,123 @@
+{% extends 'admin_dashboard.html' %}
+{% block content %}
+<style>
+    .sidebar{
+        position:fixed;
+        height: 200%;
+    }
+    .main-content{
+        margin-left: 290px;
+    }
+    textarea{
+        padding-right: 247px;
+        padding-bottom: 20px;
+    }
+</style>
+
+<h3>Add Product</h3>
+<form method="POST" action="/add_product" enctype="multipart/form-data">
+    <!-- Product Name -->
+    <label for="product_name">Product Name:</label>
+    <input type="text" name="product_name" id="product_name" required>
+
+    <!-- Product Price -->
+    <label for="product_price">Product Price:</label>
+    <input type="number" name="product_price" id="product_price" step="0.01" min="0.01" required>
+
+    <!-- Product Type -->
+    <label for="category">Product Type:</label>
+        <select name="category" id="category" required>
+            {% for category in categories %}
+                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
+            {% endfor %} 
+
+        </select>
+
+    <label for="stock">Stock Quantity:</label>
+    <input type="number" name="stock" id="stock" min="1" required>
+
+    <!-- Type Description -->
+    <label for="type_description">Type Description:</label>
+    <textarea  name="type_description" id="type_description" rows="4" required></textarea>
+
+    <!-- Product Photo -->
+    <label for="photo">Product Photo:</label>
+    <input type="file" name="photo" id="photo" accept="image/*" required>
+
+    <button type="submit">Add Product</button>
+</form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const productNameInput = document.getElementById("product_name");
+        const productPriceInput = document.getElementById("product_price");
+        const productPhotoInput = document.getElementById("photo");
+
+        function validateProductName() {
+            const productName = productNameInput.value.trim();
+            const letterCount = (productName.match(/[a-zA-Z]/g) || []).length; 
+            if (letterCount < 2) {
+                showError(productNameInput, "Product name must contain at least two letters.");
+                return false;
+            } else {
+                hideError(productNameInput);
+                return true;
+            }
+        }
+        function validateProductPrice() {
+            const price = parseFloat(productPriceInput.value);
+            if (isNaN(price) || price <= 0) {
+                showError(productPriceInput, "Price must be a positive number.");
+                return false;
+            } else {
+                hideError(productPriceInput);
+                return true;
+            }
+        }
+        function validateProductPhoto() {
+            const file = productPhotoInput.files[0];
+            if (!file) {
+                showError(productPhotoInput, "Please upload a valid product photo.");
+                return false;
+            }
+            const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+                showError(productPhotoInput, "Only JPG, JPEG, PNG, or GIF files are allowed.");
+                return false;
+            } else {
+                hideError(productPhotoInput);
+                return true;
+            }
+        }
+        function showError(input, message) {
+            let errorSpan = input.nextElementSibling;
+            if (!errorSpan || !errorSpan.classList.contains("error-message")) {
+                errorSpan = document.createElement("span");
+                errorSpan.classList.add("error-message");
+                errorSpan.style.color = "red";
+                errorSpan.style.fontSize = "0.9rem";
+                input.parentNode.appendChild(errorSpan);
+            }
+            errorSpan.textContent = message;
+            input.style.borderColor = "red";
+        }
+        function hideError(input) {
+            let errorSpan = input.nextElementSibling;
+            if (errorSpan && errorSpan.classList.contains("error-message")) {
+                errorSpan.remove();
+            }
+            input.style.borderColor = "";
+        }
+        productNameInput.addEventListener("input", validateProductName);
+        productPriceInput.addEventListener("input", validateProductPrice);
+        productPhotoInput.addEventListener("change", validateProductPhoto);
+        form.addEventListener("submit", function (event) {
+            if (!validateProductName() || !validateProductPrice() || !validateProductPhoto()) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: url('https://preview.colorlib.com/theme/bootstrap/login-form-20/images/bg.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:invalid {
+            border-color: #e74c3c;
+        }
+
+        input:valid {
+            border-color: #2ecc71;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .links {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .links a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            input[type="submit"] {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        {% block flash_messages %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <div class="form-container">
+        <h1>Register</h1>
+
+        <form method="POST" action="{{ url_for('register') }}" onsubmit="return validateForm()">
+            <input id="csrf_token" name="csrf_token" type="hidden"
+                value="Ijc1MDVlN2VhOWI5NDdiZWI1ZmZjNWJkNjk5NTQ1YzM3YmFjMTQ0Yjci.Z4fz3Q.X0oZbmzXsCVgsmeOpk6lAZAyPSw">
+            <div>
+                <label for="username">Username <span>*</span></label>
+                <input id="username" name="username" pattern="^[a-zA-Z0-9]{3,20}$"
+                    title="Username should be 3-20 characters long and contain only letters and numbers." size="32"
+                    type="text" value="">
+            </div>
+            <div>
+                <label for="email">Email <span>*</span></label>
+                <input id="email" name="email" required type="email" title="Please enter a valid email address."
+                    size="32" type="text" value="">
+            </div>
+            <div>
+                <label for="password">Password <span>*</span></label>
+                <input id="password" name="password" required pattern=".{6,}"
+                    title="Password must be at least 6 characters long." size="32" type="password" value="">
+
+            </div>
+            <div>
+                <label for="confirm_password">confirm_password <span>*</span></label>
+                <input id="confirm_password" name="confirm_password" required title="Passwords must match." size="32"
+                    type="password" value="">
+            </div>
+
+            <div>
+                <input id="submit" name="submit" type="submit" value="Sign up">
+            </div>
+        </form>
+        <div class="links">
+            <a href="{{ url_for('login') }}">Already have an account? Login here</a>
+        </div>
+    </div>
+
+
+    <script>
+
+        // Validate Username,email,password and checking password match to confirm password.
+        // If any validation fails, prevent form submission
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const username = document.getElementById("username");
+            const email = document.getElementById("email");
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirm_password");
+
+            form.addEventListener("submit", function (event) {
+                let valid = true;
+                const usernamePattern = /^[a-zA-Z0-9]{3,20}$/;
+                if (!usernamePattern.test(username.value)) {
+                    showError(username, "Username must be 3-20 characters and contain only letters and numbers.");
+                    valid = false;
+                } else {
+                    removeError(username);
+                }
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailPattern.test(email.value)) {
+                    showError(email, "Please enter a valid email address.");
+                    valid = false;
+                } else {
+                    removeError(email);
+                }
+                const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+                if (!passwordPattern.test(password.value)) {
+                    showError(password, "Password must be at least 6 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.");
+                    valid = false;
+                } else {
+                    removeError(password);
+                }
+                if (confirmPassword.value !== password.value) {
+                    showError(confirmPassword, "Passwords do not match.");
+                    valid = false;
+                } else {
+                    removeError(confirmPassword);
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
+            });
+
+            function showError(input, message) {
+                let errorSpan = input.nextElementSibling;
+                if (!errorSpan || !errorSpan.classList.contains("error-message")) {
+                    errorSpan = document.createElement("small");
+                    errorSpan.classList.add("error-message");
+                    errorSpan.style.color = "#e74c3c";
+                    input.parentNode.appendChild(errorSpan);
+                }
+                errorSpan.textContent = message;
+                input.style.borderColor = "#e74c3c";
+            }
+            function removeError(input) {
+                let errorSpan = input.nextElementSibling;
+                if (errorSpan && errorSpan.classList.contains("error-message")) {
+                    errorSpan.remove();
+                }
+                input.style.borderColor = "#2ecc71";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

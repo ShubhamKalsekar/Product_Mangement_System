@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+        
+        .flash-messages {
+            position: absolute;
+            top: 60px;
+            left: 200px;
+            z-index: 1000;
+            width: 600px;
+        }
+
+        .flash-messages .alert {
+            margin-bottom: 10px;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+        .flash-messages .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar {
+            width: 290px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+        
+        .sidebar ul li a.active,
+        .sidebar ul li a:hover {
+            background-color: #1abc9c;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .header h2 {
+            margin: 0 0 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .form-section {
+            background-color: #fff;
+            padding: 70px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            height: 100vh;
+            margin: 100px 200px 200px 150px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} fade-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container d-flex">
+        <aside class="sidebar">
+            <h2>User Dashboard</h2>
+            <nav>
+                <ul>
+                    {% if 'usr_id' in session %}
+                    <li><a href="/dashboard" class="{{ 'active' if request.path == '/dashboard' }}">Dashboard</a></li>
+                    <li><a href="/your_order" class="{{ 'active' if request.path == '/your_order' }}">Your Order</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                            {% else %}
+                    {% endif %}
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                const flashMessages = document.querySelectorAll('.fade-message');
+                flashMessages.forEach(function(message) {
+                    message.classList.add('fade-out');
+                });
+            }, 2000); 
+    };
+    </script>
+</body>
+
+</html>

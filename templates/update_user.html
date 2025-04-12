@@ -1,0 +1,45 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+<h3>Update User Details</h3>
+
+<form method="POST" onsubmit="return validateUpdateUserForm()">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label"> Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-success">Update User</button>
+</form>
+
+<script>
+    function validateUpdateUserForm() {
+        const username = document.getElementById('username').value;
+        if (username.trim() === "") {
+            alert("Username is required.");
+            return false;
+        }
+        const email = document.getElementById('email').value;
+        const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        if (!email.match(emailPattern)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+        const password = document.getElementById('password').value;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+        if (!password.match(passwordPattern)) {
+            alert("Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+            return false;
+        }
+        return true; 
+    }
+</script>
+
+{% endblock %}
